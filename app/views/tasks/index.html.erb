@@ -1,0 +1,17 @@
+<h1>Task一覧</h1>
+
+<table>
+  <tr>
+    <th>名前</th>
+    <th>内容</th>
+  </tr>
+
+<% @tasks.each do |task| %>
+  <tr>
+    <td><%= task.name %></td>
+    <td><%= task.content %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to '新しくブログを投稿する', new_task_path %>

@@ -9,7 +9,7 @@ class TasksController < ApplicationController
 
     def create
       Task.create(task_params)
-      redirect_to new_task_path
+      redirect_to index_task_path
     end
 
 
