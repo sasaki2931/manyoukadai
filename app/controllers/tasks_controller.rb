@@ -41,6 +41,10 @@ class TasksController < ApplicationController
       end
     end
 
+    def confirm
+      @task = Task.new(task_params)
+    end
+
     private
     
     def task_params
