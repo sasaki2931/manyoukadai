@@ -7,4 +7,6 @@
   <p>タイトル:<%= @task.name %></p>
   <p>本文:<%= @task.content %></p>
   <%= form.submit  "登録する" %>
+  <%= form.submit "戻る", name: 'back' %>
 <% end %>
+

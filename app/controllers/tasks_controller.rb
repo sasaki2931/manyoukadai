@@ -10,6 +10,9 @@ class TasksController < ApplicationController
 
     def create
       @task = Task.new(task_params)
+      if params[:back]
+        render :new
+      else
       if @blog.save
         redirect_to tasks_path, notice: "ブログを作成しました！"
       else
@@ -43,6 +46,7 @@ class TasksController < ApplicationController
 
     def confirm
       @task = Task.new(task_params)
+      render :new if @task.invalid?
     end
 
     private
