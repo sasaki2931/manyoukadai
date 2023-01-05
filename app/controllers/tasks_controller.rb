@@ -8,8 +8,12 @@ class TasksController < ApplicationController
     end
 
     def create
-      Task.create(task_params)
-      redirect_to index_task_path
+      @task = Task.new(task_params)
+      if @blog.save
+        redirect_to tasks_path, notice: "ブログを作成しました！"
+      else
+        render :new
+   
     end
 
 
