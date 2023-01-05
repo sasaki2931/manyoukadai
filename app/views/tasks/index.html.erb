@@ -11,6 +11,7 @@
     <td><%= task.name %></td>
     <td><%= task.content %></td>
     <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
+    <%= link_to "taskを編集する", edit_task_path(id) %>
   </tr>
 <% end %>
 </table>
