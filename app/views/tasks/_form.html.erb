@@ -10,8 +10,8 @@
       </ul>
     </div>
   <% end %>
-      <div class="task_naem">
-        <%= form.label :naeme %>
+      <div class="task_name">
+        <%= form.label :name %>
         <%= form.text_field :name %>
       </div>
       <div class="task_content">
@@ -19,7 +19,7 @@
         <%= form.text_field :content %>
       </div>
       <%= form.submit %>
-      
+
   <% end %>
   
   <%= link_to 'ブログ一覧画面に戻る', tasks_path %>

@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update]
+    before_action :set_task, only: [:show, :edit, :update,:destroy]
     def index
       @tasks = Task.all
     end
@@ -13,11 +13,12 @@ class TasksController < ApplicationController
       if params[:back]
         render :new
       else
-      if @blog.save
-        redirect_to tasks_path, notice: "ブログを作成しました！"
-      else
-        render :new
-   
+        if @task.save
+          redirect_to tasks_path, notice: "ブログを作成しました！"
+        else
+          render :new
+        end
+      end
     end
 
 
@@ -46,17 +47,16 @@ class TasksController < ApplicationController
 
     def confirm
       @task = Task.new(task_params)
-      render :new if @task.invalid?
     end
+  
 
     private
     
     def task_params
-        params.require(:task).permit(:name,:content)
+      params.require(:task).permit(:name,:content)
     end
 
     def set_task
       @task = Task.find(params[:id])
     end
-
 end

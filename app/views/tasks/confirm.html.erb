@@ -1,6 +1,6 @@
 <h3>以下の内容で、送信する。</h3>
 
-<%= form_with(model: @task, local: true) do |form| %>
+<%= form_with(model: @task,url: tasks_path, local: true) do |form| %>
   <%= form.hidden_field :name %>
   <%= form.hidden_field :content %>
 
