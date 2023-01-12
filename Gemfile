@@ -32,6 +32,8 @@ group :development, :test do
   gem 'faker'
   gem 'launchy'
   gem 'rexml'
+
+  
  
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
