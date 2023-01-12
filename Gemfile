@@ -33,9 +33,7 @@ group :development, :test do
   gem 'launchy'
   gem 'rexml'
 
-  gem 'net-smtp'
-  gem 'net-imap'
-  gem 'net-pop'
+  
  
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
