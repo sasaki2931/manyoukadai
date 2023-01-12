@@ -1,6 +1,10 @@
 {
   "name": "monyou",
   "private": true,
+  "engines": {
+    "node": "16.17.0"
+  },
+
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
