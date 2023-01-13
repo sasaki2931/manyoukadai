@@ -6,6 +6,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in'task[name]',with:'task'
         fill_in'task[content]',with:'task'
+        fill_in'task[deadline]',with:'task'
         click_button'commit'
         expect(page).to have_content 'task'
 
@@ -29,6 +30,18 @@ RSpec.describe 'タスク管理機能', type: :system do
         task_list = all('.task_row') 
         expect(task_list[0]).to have_content 'test_content2'
         expect(task_list[1]).to have_content 'test_content1'
+      end
+    end
+  end
+  context 'タスクが作成日時の降順に並んでいる場合' do
+    it '新しいタスクが一番上に表示される' do
+        FactoryBot.create(:task)
+        FactoryBot.create(:second_task)
+        visit tasks_path
+        click_link'終了期限でソートする'
+        task_list = all('.task_row')
+        expect(task_list[0]).to have_content '2002-2-2'
+        expect(task_list[1]).to have_content '2001-1-1'
       end
     end
   end
