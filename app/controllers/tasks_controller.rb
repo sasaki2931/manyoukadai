@@ -3,16 +3,16 @@ class TasksController < ApplicationController
   def index
    
     if params[:sort_expired] == "true"
-      @tasks = Task.all.order(deadline: "DESC")
+      @tasks = Task.all.order(deadline: "DESC").page(params[:page])
       
     else 
-      @tasks = Task.all.order(created_at: "DESC")
+      @tasks = Task.all.order(created_at: "DESC").page(params[:page])
     end
 
     if params[:sort_rank] == "true"
-      @@tasks = Task.all.order(rank: "DESC")
+      @@tasks = Task.all.order(rank: "DESC").page(params[:page])
     else
-      @tasks = Task.all.order(created_at: "DESC")
+      @tasks = Task.all.order(created_at: "DESC").page(params[:page])
     end
     #binding.irb
     if params[:task].present?
