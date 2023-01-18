@@ -1,4 +1,14 @@
-<h1>Task一覧</h1>
+<header class="masthead" style="background-image: url(<%= asset_path 'home-bg.jpg' %>)">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                  <h1>Task一覧</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
 <p><%= notice %></p>
 
@@ -39,4 +49,4 @@
 <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
 <%= link_to "優先順位でソートする", tasks_path(sort_rank: "true") %>
 <%= link_to '新しくブログを投稿する', new_task_path %>
-<%= paginate @tasks %>
+<%= paginate @tasks,theme: 'twitter-bootstrap-4' %>

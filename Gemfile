@@ -10,6 +10,8 @@ gem 'rails', '~> 6.1.6'
 
 gem 'kaminari'
 
+gem 'bootstrap4-kaminari-views'
+
 gem 'pg', '~> 1.1'
 
 gem 'puma', '~> 5.0'
