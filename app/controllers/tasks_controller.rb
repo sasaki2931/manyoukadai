@@ -1,8 +1,29 @@
 class TasksController < ApplicationController
-    before_action :set_task, only: [:show, :edit, :update,:destroy]
-    def index
-      @tasks = Task.all.order(created_at: "DESC")
+  before_action :set_task, only: [:show, :edit, :update,:destroy]
+  def index
+    #binding.irb
+    @tasks = Task.all.order(created_at: "DESC").page(params[:page])
+    if params[:sort_expired] == "true"
+      @tasks = Task.all.order(deadline: "DESC").page(params[:page])
     end
+    
+    if params[:sort_rank] == "true"
+      @tasks = Task.all.order(rank: "DESC").page(params[:page])
+    end
+    if params[:task].present?
+      @tasks = @tasks
+      .status_seach(params[:task][:status])
+      .name_seach(params[:task][:title])
+        #if params[:seach][:status].present? && params[:seach][name].present?
+         # @tasks = @tasks.where('name LIKE ? AND status LIKE?', "%#{params[:search]}%")
+        #elsif params[:seach][:status].present?
+          #@tasks = @tasks.where(status: params[:status])
+        #else
+          #@tasks = @tasks.where('name LIKE ?', "%#{params[:search]}%")
+        #end
+    end
+  end
+    
 
     def new
       @task = Task.new
@@ -53,7 +74,7 @@ class TasksController < ApplicationController
     private
     
     def task_params
-      params.require(:task).permit(:name,:content)
+      params.require(:task).permit(:name,:content,:deadline,:status,:rank)
     end
 
     def set_task

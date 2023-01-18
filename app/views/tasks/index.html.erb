@@ -1,22 +1,56 @@
-<h1>Task一覧</h1>
+<header class="masthead" style="background-image: url(<%= asset_path 'home-bg.jpg' %>)">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                  <h1>Task一覧</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
 <p><%= notice %></p>
 
+<%= form_with scope: :task,url:tasks_path, method: :get, local: true do |form| %>
+  <div class="selection-field">
+    <%= form.text_field :search %>
+  </div>
+  <div class="selection-field">
+    <%= form.select :status, Task.statuses.keys %>
+  </div>
+  <div>
+    <%= form.submit 'Search', name: nil %>
+  </div>
+<% end %>
 
-<table>
-  <tr>
+
+<table class="table">
+  <thead>
+   <tr>
     <th>名前</th>
     <th>内容</th>
-  </tr>
-  <% @tasks.each do |task| %>
-    <tr class="task_row">
-      <td><%= task.name %></td>
-      <td><%= task.content %></td>
-      <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
-      <td><%= link_to "taskを編集する", edit_task_path(task.id) %></td>
-      <td><%= link_to 'ブログを削除する', task_path(task.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>
-    </tr>
+    <th>終了期限</th>
+    <th>ステータス</th>
+    <th>優先順位</th>
+   </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr class="task_row">
+        <td><%= task.name %></td>
+        <td><%= task.content %></td>
+        <td><%= task.deadline %></td>
+        <td><%= task.status %></td>
+        <td><%= task.rank %></td>
+        <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
+        <td><%= link_to "taskを編集する", edit_task_path(task.id) %></td>
+        <td><%= link_to 'ブログを削除する', task_path(task.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>
+      </tr>
+    </tbody>
   <% end %>
 </table>
-
+<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
+<%= link_to "優先順位でソートする", tasks_path(sort_rank: "true") %>
 <%= link_to '新しくブログを投稿する', new_task_path %>
+<%= paginate @tasks,theme: 'twitter-bootstrap-4' %>
