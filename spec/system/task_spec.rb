@@ -7,6 +7,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in'task[name]',with:'task'
         fill_in'task[content]',with:'task'
         fill_in'task[deadline]',with:'task'
+        fill_in'task[deadline]',with'task'
         click_button'commit'
         expect(page).to have_content 'task'
 
@@ -53,5 +54,37 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'task'
        end
      end
+  end
+  describe '検索機能' do
+    before do
+      FactoryBot.create(:task, title: "task")
+      FactoryBot.create(:second_task, title: "sample")
+    end
+
+    context 'タイトルであいまい検索をした場合' do
+      it "検索キーワードを含むタスクで絞り込まれる" do
+        visit tasks_path
+        fill_in "selection-field",with:"task"
+        click_button 'Seach'
+        expect(page).to have_content 'task'
+      end
+    end
+    context 'ステータス検索をした場合' do
+      it "ステータスに完全一致するタスクが絞り込まれる" do
+        select 'not_started',from: 'enum'
+        click_button 'Seach'
+        expect(page).to have_content 'not_started'
+      end
+    end
+    context 'タイトルのあいまい検索とステータス検索をした場合' do
+      it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+        fill_in "selection-field",with:"task"
+        select 'not_started',from: 'enum'
+        click_button 'Seach'
+        expect(page).to have_content 'not_started'
+        expect(page).to have_content 'task'
+        # ここに実装する
+      end
+    end
   end
 end

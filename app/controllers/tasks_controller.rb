@@ -1,12 +1,34 @@
 class TasksController < ApplicationController
-    before_action :set_task, only: [:show, :edit, :update,:destroy]
-    def index
-      if params[:sort_expired] == true
-        @tasks = Task.all.order(deadline: "DESC")
-      else 
-        @tasks = Task.all.order(created_at: "DESC")
-      end
+  before_action :set_task, only: [:show, :edit, :update,:destroy]
+  def index
+   
+    if params[:sort_expired] == "true"
+      @tasks = Task.all.order(deadline: "DESC")
+      
+    else 
+      @tasks = Task.all.order(created_at: "DESC")
     end
+
+    if params[:sort_rank] == "true"
+      @@tasks = Task.all.order(rank: "DESC")
+    else
+      @tasks = Task.all.order(created_at: "DESC")
+    end
+    #binding.irb
+    if params[:task].present?
+      @tasks = @tasks
+      .status_seach(params[:task][:status])
+      .name_seach(params[:task][:title])
+        #if params[:seach][:status].present? && params[:seach][name].present?
+         # @tasks = @tasks.where('name LIKE ? AND status LIKE?', "%#{params[:search]}%")
+        #elsif params[:seach][:status].present?
+          #@tasks = @tasks.where(status: params[:status])
+        #else
+          #@tasks = @tasks.where('name LIKE ?', "%#{params[:search]}%")
+        #end
+    end
+  end
+    
 
     def new
       @task = Task.new
@@ -57,7 +79,7 @@ class TasksController < ApplicationController
     private
     
     def task_params
-      params.require(:task).permit(:name,:content)
+      params.require(:task).permit(:name,:content,:deadline,:status,:rank)
     end
 
     def set_task

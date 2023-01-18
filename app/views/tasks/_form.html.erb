@@ -11,19 +11,27 @@
     </div>
   <% end %>
       <div class="task_name">
-        <%= form.label :name %>
+        <%= form.label :名前 %>
         <%= form.text_field :name %>
       </div>
       <div class="task_content">
-        <%= form.label :content %>
+        <%= form.label :内容 %>
         <%= form.text_field :content %>
       </div>
       <div class="task_deadline">
-        <%= form.label :deadline %>
-        <%= form.text_field :deadlinet %>
+        <%= form.label :期限 %>
+        <%= form.text_field :deadline %>
+      </div>
+      <div class="task_status">
+        <%= form.label :ステータス %>
+        <%= form.select :status, Task.statuses.keys %>
+      </div>
+      <div class="task_rank">
+        <%= form.label :ランク %>
+        <%= form.select :rank, Task.ranks.keys %>
       </div>
       <%= form.submit %>
 
-  <% end %>
+<% end %>
   
   <%= link_to 'ブログ一覧画面に戻る', tasks_path %>
