@@ -1,20 +1,15 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update,:destroy]
   def index
-   
+    #binding.irb
+    @tasks = Task.all.order(created_at: "DESC").page(params[:page])
     if params[:sort_expired] == "true"
       @tasks = Task.all.order(deadline: "DESC").page(params[:page])
-      
-    else 
-      @tasks = Task.all.order(created_at: "DESC").page(params[:page])
     end
-
+    
     if params[:sort_rank] == "true"
-      @@tasks = Task.all.order(rank: "DESC").page(params[:page])
-    else
-      @tasks = Task.all.order(created_at: "DESC").page(params[:page])
+      @tasks = Task.all.order(rank: "DESC").page(params[:page])
     end
-    #binding.irb
     if params[:task].present?
       @tasks = @tasks
       .status_seach(params[:task][:status])
