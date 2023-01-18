@@ -25,25 +25,29 @@
 <% end %>
 
 
-<table>
-  <tr>
+<table class="table">
+  <thead>
+   <tr>
     <th>名前</th>
     <th>内容</th>
     <th>終了期限</th>
     <th>ステータス</th>
     <th>優先順位</th>
-  </tr>
-  <% @tasks.each do |task| %>
-    <tr class="task_row">
-      <td><%= task.name %></td>
-      <td><%= task.content %></td>
-      <td><%= task.deadline %></td>
-      <td><%= task.status %></td>
-      <td><%= task.rank %></td>
-      <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
-      <td><%= link_to "taskを編集する", edit_task_path(task.id) %></td>
-      <td><%= link_to 'ブログを削除する', task_path(task.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>
-    </tr>
+   </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr class="task_row">
+        <td><%= task.name %></td>
+        <td><%= task.content %></td>
+        <td><%= task.deadline %></td>
+        <td><%= task.status %></td>
+        <td><%= task.rank %></td>
+        <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
+        <td><%= link_to "taskを編集する", edit_task_path(task.id) %></td>
+        <td><%= link_to 'ブログを削除する', task_path(task.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>
+      </tr>
+    </tbody>
   <% end %>
 </table>
 <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
