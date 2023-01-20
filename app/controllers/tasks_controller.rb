@@ -1,14 +1,15 @@
 class TasksController < ApplicationController
+  skip_before_action :login_required, only: [:new, :create]
   before_action :set_task, only: [:show, :edit, :update,:destroy]
   def index
     #binding.irb
-    @tasks = Task.all.order(created_at: "DESC").page(params[:page])
+    @tasks = current_user.tasks.order(created_at: "DESC").page(params[:page])
     if params[:sort_expired] == "true"
-      @tasks = Task.all.order(deadline: "DESC").page(params[:page])
+      @tasks = current_user.tasks.order(deadline: "DESC").page(params[:page])
     end
     
     if params[:sort_rank] == "true"
-      @tasks = Task.all.order(rank: "DESC").page(params[:page])
+      @tasks = current_user.tasks.order(rank: "DESC").page(params[:page])
     end
     if params[:task].present?
       @tasks = @tasks
