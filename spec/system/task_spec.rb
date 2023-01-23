@@ -1,14 +1,25 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:task) { FactoryBot.create(:task, user: user) }
+  let!(:second_task) { FactoryBot.create(:second_task, user: user) }
   describe '新規作成機能' do
+    before do
+      visit new_session_path
+      fill_in "session[email]", with: 'test@test.com'
+      fill_in "session[password]", with: 'testtest'
+      click_button 'Log in'
+      binding.irb
+    end
+
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
         visit new_task_path
         fill_in'task[name]',with:'task'
         fill_in'task[content]',with:'task'
-        fill_in'task[deadline]',with:'task'
-        fill_in'task[deadline]',with:'task'
+        fill_in'task[deadline]',with:'1111-01-01'
         click_button'commit'
+        click_button'登録する'
         expect(page).to have_content 'task'
 
       end
@@ -17,7 +28,6 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-        task = FactoryBot.create(:task, name: 'task')
         visit tasks_path
         expect(page).to have_content 'task'
       end
