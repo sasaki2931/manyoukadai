@@ -29,7 +29,8 @@ class Admin::UsersController < ApplicationController
 
     def show
       @user = User.find(params[:id])
-      @tasks = Task.all.includes(:user)
+      @tasks = @user.tasks.all.includes(:user)
+      #@tasks = Task.all.includes(:user)
     end
 
     def edit
@@ -39,9 +40,9 @@ class Admin::UsersController < ApplicationController
 
     def destroy
         @user = User.find(params[:id])
-        @user.destroy
-        flash[:danger] = "ユーザを削除しました"
-        redirect_to admin_users_path
+          @user.destroy
+          flash[:danger] = "ユーザを削除しました"
+          redirect_to admin_users_path
     end
 
     private

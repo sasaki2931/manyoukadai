@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   root to: 'tasks#index'
   resources :sessions, only: [:new, :create, :destroy]
-  resources :users, only: [:new,:create,:show]
+  resources :users, only: [:new,:create,:show,:show,:edit,:update]
   namespace :admin do
-    resources :users, only: [:new,:index,:create,:edit,:destroy,:show,:update]
+    resources :users
   end
   resources :tasks do
     collection do
