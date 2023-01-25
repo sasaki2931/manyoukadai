@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2023_01_25_054605) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
     t.boolean "admin", default: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "labellings", "labels"

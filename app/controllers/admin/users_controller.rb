@@ -2,7 +2,7 @@ class Admin::UsersController < ApplicationController
     before_action :admin_user
 
     def index
-        @user = User.all.order("created_at DESC")
+        @user = User.all.includes(:tasks)
     end
 
     def new
@@ -53,8 +53,8 @@ class Admin::UsersController < ApplicationController
 
     def  admin_user
       unless current_user.admin?
+        redirect_to tasks_path 
         flash[:danger] = "管理者以外アクセスできません"
-        redirect_to new_session_path 
       end
     end
 end

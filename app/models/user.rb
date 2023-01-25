@@ -13,10 +13,17 @@ class User < ApplicationRecord
     private
 
     def admin_cannot_update
-        throw :abort if User.exists?(admin: true) && self.saved_change_to_admin == [true, false]
+        @admin_users = User.where(admin: true)
+      if(@admin_users.count == 1 && @admin_users.first == self) && self.admin == false
+        throw.abort
+      end
     end
+        
 
     def admin_cannot_delete
-        throw :abort if User.exists?(admin: true) && self.admin == true
-    end
+        if User.where(admin:true).count == 1 && self.admin
+            throw :abort
+        end
+    end        
+    
 end
