@@ -4,7 +4,6 @@ class TasksController < ApplicationController
   def index
     #binding.irb
     @tasks = current_user.tasks.order(created_at: "DESC").page(params[:page])
-    #@tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
     if params[:sort_expired] == "true"
       @tasks = current_user.tasks.order(deadline: "DESC").page(params[:page])
     end
@@ -16,12 +15,14 @@ class TasksController < ApplicationController
       @tasks = @tasks
       .status_seach(params[:task][:status])
       .name_seach(params[:task][:title])
-        #if params[:seach][:status].present? && params[:seach][name].present?
-         # @tasks = @tasks.where('name LIKE ? AND status LIKE?', "%#{params[:search]}%")
-        #elsif params[:seach][:status].present?
-          #@tasks = @tasks.where(status: params[:status])
-        #else
-          #@tasks = @tasks.where('name LIKE ?', "%#{params[:search]}%")
+      .label_seach(params[:task][:label_id])
+      #if params[:seach][:status].present? && params[:seach][name].present?
+      # @tasks = @tasks.where('name LIKE ? AND status LIKE?', "%#{params[:search]}%")
+      #elsif params[:seach][:status].present?
+      #@tasks = @tasks.where(status: params[:status])
+      #else
+      #@tasks = @tasks.where('name LIKE ?', "%#{params[:search]}%")
+      #@tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
         #end
     end
   end

@@ -19,6 +19,9 @@
   <div class="selection-field">
     <%= form.select :status, Task.statuses.keys %>
   </div>
+  <div class="selection-field">
+    <%= form.select("label_id",Label.pluck(:name,:id), { include_blank: true }) %>
+  </div>
   <div>
     <%= form.submit 'Search', name: nil %>
   </div>

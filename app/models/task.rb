@@ -19,4 +19,9 @@ class Task < ApplicationRecord
         return if status.blank?
         where(status: status)
     }
+
+    scope :label_seach,->(label_id) {
+        return if label_id.blank?
+        joins(:labels).where('id LIKE ?',"%{label_id}")
+    }
 end
