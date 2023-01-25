@@ -4,6 +4,9 @@ class Task < ApplicationRecord
 
     belongs_to :user
 
+    has_many :labellings, dependent: :destroy
+    has_many :labels, through: :labellings
+
     enum status: { 未着手: 0,着手中: 1,完了: 2,}
     enum rank: {高: 0,中: 1,低: 2}
 

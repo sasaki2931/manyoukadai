@@ -4,6 +4,7 @@ class TasksController < ApplicationController
   def index
     #binding.irb
     @tasks = current_user.tasks.order(created_at: "DESC").page(params[:page])
+    #@tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
     if params[:sort_expired] == "true"
       @tasks = current_user.tasks.order(deadline: "DESC").page(params[:page])
     end
@@ -77,7 +78,7 @@ class TasksController < ApplicationController
     private
     
     def task_params
-      params.require(:task).permit(:name,:content,:deadline,:status,:rank)
+      params.require(:task).permit(:name,:content,:deadline,:status,:rank,{label_ids:[] } )
     end
 
     def set_task
