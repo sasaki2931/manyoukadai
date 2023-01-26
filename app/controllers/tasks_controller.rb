@@ -1,25 +1,28 @@
 class TasksController < ApplicationController
+  skip_before_action :login_required, only: [:new, :create]
   before_action :set_task, only: [:show, :edit, :update,:destroy]
   def index
     #binding.irb
-    @tasks = Task.all.order(created_at: "DESC").page(params[:page])
+    @tasks = current_user.tasks.order(created_at: "DESC").page(params[:page])
     if params[:sort_expired] == "true"
-      @tasks = Task.all.order(deadline: "DESC").page(params[:page])
+      @tasks = current_user.tasks.order(deadline: "DESC").page(params[:page])
     end
     
     if params[:sort_rank] == "true"
-      @tasks = Task.all.order(rank: "DESC").page(params[:page])
+      @tasks = current_user.tasks.order(rank: "DESC").page(params[:page])
     end
     if params[:task].present?
       @tasks = @tasks
       .status_seach(params[:task][:status])
       .name_seach(params[:task][:title])
-        #if params[:seach][:status].present? && params[:seach][name].present?
-         # @tasks = @tasks.where('name LIKE ? AND status LIKE?', "%#{params[:search]}%")
-        #elsif params[:seach][:status].present?
-          #@tasks = @tasks.where(status: params[:status])
-        #else
-          #@tasks = @tasks.where('name LIKE ?', "%#{params[:search]}%")
+      .label_seach(params[:task][:label_id])
+      #if params[:seach][:status].present? && params[:seach][name].present?
+      # @tasks = @tasks.where('name LIKE ? AND status LIKE?', "%#{params[:search]}%")
+      #elsif params[:seach][:status].present?
+      #@tasks = @tasks.where(status: params[:status])
+      #else
+      #@tasks = @tasks.where('name LIKE ?', "%#{params[:search]}%")
+      #@tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
         #end
     end
   end
@@ -31,6 +34,7 @@ class TasksController < ApplicationController
 
     def create
       @task = Task.new(task_params)
+      @task.user_id = current_user.id
       if params[:back]
         render :new
       else
@@ -68,13 +72,14 @@ class TasksController < ApplicationController
 
     def confirm
       @task = Task.new(task_params)
+      @task.user_id = current_user.id
     end
   
 
     private
     
     def task_params
-      params.require(:task).permit(:name,:content,:deadline,:status,:rank)
+      params.require(:task).permit(:name,:content,:deadline,:status,:rank,{label_ids:[] } )
     end
 
     def set_task

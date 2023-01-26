@@ -1,0 +1,9 @@
+<h1><%= @user.name %>のページ</h1>
+
+<p>メールアドレス: <%= @user.email %></p>
+
+<td><%= @user.admin %></td>
+
+<td><%= link_to 'ブログ一覧画面に行く', tasks_path %></td>
+
+<%= link_to "管理者ページへ", admin_users_path %>
