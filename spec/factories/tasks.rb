@@ -6,6 +6,11 @@ FactoryBot.define do
       deadline{'2001-01-01'}
       status{'未着手'}
 
+      after(:build) do |task|
+        label = create(:label)
+        task.labellings << build(:labelling, task: task, label: label)
+      end
+
     end
     factory :second_task, class: Task do
       name { 'test_name2' }
