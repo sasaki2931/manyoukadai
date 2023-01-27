@@ -49,7 +49,8 @@ class TasksController < ApplicationController
 
 
     def show
-      
+     #@task = Task.new(task_params)
+      #@task.user_id = current_user.id
     end
 
     def edit

@@ -20,10 +20,18 @@ RSpec.describe 'ラベル機能', type: :system do
               expect(page).to have_content '1'
             end
         end
+        context 'タスク詳細に移行した場合' do
+          it "ラベルが表示される" do
+           visit tasks_path
+            sleep(5)
+            click_link '詳細を確認する'
+            expect(page).to have_content '1'
+          end
+        end
         context 'ラベル検索をした場合' do
             it "ラベルに完全一致するタスクが絞り込まれる" do
                 visit tasks_path
-                binding.irb
+               
               select '1',from: 'task_label_id'
               click_button 'Search'
               expect(page).to have_content '1'
