@@ -22,6 +22,6 @@ class Task < ApplicationRecord
 
     scope :label_seach,->(label_id) {
         return if label_id.blank?
-        joins(:labels).where('id LIKE ?',"%{label_id}")
+        joins(:labels).where(labellings: {label_id: label_id})
     }
 end

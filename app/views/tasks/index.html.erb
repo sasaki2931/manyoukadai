@@ -32,7 +32,6 @@
   <thead>
    <tr>
     <th>名前</th>
-    <th>タイトル</th>
     <th>内容</th>
     <th>終了期限</th>
     <th>ステータス</th>
@@ -43,7 +42,6 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr class="task_row">
-        <td><%= task.user.name %></td>
         <td><%= task.name %></td>
         <td><%= task.content %></td>
         <td><%= task.deadline %></td>

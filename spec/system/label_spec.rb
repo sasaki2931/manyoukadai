@@ -15,18 +15,27 @@ RSpec.describe 'ラベル機能', type: :system do
               fill_in'task[name]',with:'test'
               fill_in'task[content]',with:'test'
               fill_in'task[deadline]',with:'2011-01-01'
-              check "task[label_ids_1]"
+              check 'task_label_ids_1'
               click_button'commit'
-              sleep(5)
               expect(page).to have_content '1'
             end
         end
+        context 'タスク詳細に移行した場合' do
+          it "ラベルが表示される" do
+           visit tasks_path
+            sleep(5)
+            click_link '詳細を確認する'
+            expect(page).to have_content '1'
+          end
+        end
         context 'ラベル検索をした場合' do
             it "ラベルに完全一致するタスクが絞り込まれる" do
-              visit tasks_path
-              select '1',from: 'task[rabel_ids_1]'
+                visit tasks_path
+               
+              select '1',from: 'task_label_id'
               click_button 'Search'
               expect(page).to have_content '1'
             end
         end
     end
+end
